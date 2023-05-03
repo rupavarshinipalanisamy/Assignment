@@ -28,22 +28,23 @@ const LoginForm = ({ navigation }) => {
     //   }
 
     async function signIn(data){
+
         try{
-            const {password,email} = data
-            const user = await auth.signInWithEmailAndPassword(email,password)
-            if(user){
-               navigation.navigate('First')
-            }
+        const {password,email} = data
+        const user = await auth().signInWithEmailAndPassword(email,password)
+        
+        if(user){
+           navigation.navigate('First')
         }
-        catch(error){
-           
-            Alert.alert(
-                error
-              )
-            
-        }
+    }
+    catch(error){
+       error.name,
+       error.message
+    }
 
     }
+
+
 
 
     return (
@@ -51,12 +52,17 @@ const LoginForm = ({ navigation }) => {
             <Formik    
                 initialValues={{ email: '', password: '' }}
                 // onSubmit={(values) => console.log(values)}
-                onSubmit={(values)=>{
-                    signIn(values)
-                    // navigation.navigate('First') 
-                }}
+                // onSubmit={(values)=>{
+                //     signIn(values)
+                //     // navigation.navigate('First') 
+                // }}
                validationSchema={LoginFormSchema}
-                validateOnMount={true}
+                //validateOnMount={true}
+
+                onSubmit={(values)=>{
+                  signIn(values)
+                }}
+                
 
                 
             >
